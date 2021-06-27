@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html>
 
+<script language="javascript" src="./heirloomRNG.js"></script>
+
 <head>
-	<title>How much does RNG hate me today?</title>
-    <script language="javascript" src="heirloomRNG.js"></script>
+    <title>How much does RNG hate me today?</title>
+
 </head>
 
 
 
 <body style="background-color: black; color: white;">
 
-<p>
+    <p>
 
-<label for="types">Choose heirloom typerino</label>
+        <label for="types">Choose heirloom typerino</label>
+        <select name="types" onchange="getRarities()" id="types">
+            <option value="0">Select plox</option>
+            <option value="1">Shield</option>
+            <option value="2">Core</option>
+            <option value="3">Staff</option>
+        </select>
 
+    </p>
 
-<select name="types" onchange="getRarities(value)">
+    <p>
+        <label for="test" id="test2">abcde</label>
+        <select name="rarity" onchange="getAffixes()" id="rarity">
+            
+        </select>
+     </p>
 
-<option value="1">Shield</option>
-<option value="2">Core</option>
-<option value="3">Staff</option>
-
-
-</select>
-
-
-
-
-</p>
-
+     <p id="lel">
+         a
+     </p>
 
 </body>
+
 </html>
