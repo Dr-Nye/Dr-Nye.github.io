@@ -48,15 +48,8 @@ function selectType() {
 
 	//empties list and generates default element
 	out.innerHTML = null
-	out.appendChild(selectPlox);
+	optionate(out,[],Rarities);
 
-	//creates rarity options
-	for (var i = 0; i < rars + 1; i++) {
-		const option = document.createElement('option');
-		option.value = i;
-		option.label = Rarities[i];
-		out.appendChild(option);
-	}
 }
 
 function selectRarity() {
@@ -103,6 +96,7 @@ function selectRarity() {
 
 //lib adds options to selector
 function optionate(node, bl, source) {
+	node.appendChild(selectPlox);
 	for (var j = 0; j < source.length; j++) {
 		const option = document.createElement('option');
 		if (!bl.includes(j + "")) {
@@ -124,7 +118,6 @@ function selectMods(count) {
 	for (i = count + 1; i < slots; i++) {
 		selector = document.getElementById("modSelector" + i);
 		selector.innerHTML = null;
-		selector.appendChild(selectPlox);
 		optionate(selector, bl, modifiers[type - 1]);
 	}
 }
