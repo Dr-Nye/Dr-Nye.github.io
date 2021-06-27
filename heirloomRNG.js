@@ -26,7 +26,7 @@ const HeirloomValues =
 
 //selection default element
 const selectPlox = document.createElement('option');
-selectPlox.value = 0;
+selectPlox.value = -1;
 selectPlox.label = "select Plox";
 
 //declaring some stuff so it can be used after being initialized in other functions
@@ -124,6 +124,7 @@ function selectMods(count) {
 	for (i = count + 1; i < slots; i++) {
 		selector = document.getElementById("modSelector" + i);
 		selector.innerHTML = null;
+		selector.appendChild(selectPlox);
 		optionate(selector, bl, modifiers[type - 1]);
 	}
 }
@@ -138,7 +139,7 @@ function calc() {
 
 	out1 = document.getElementById("out1");
 	out2 = document.getElementById("out2");
-	
+
 
 	var results = [];
 	for (var i = 0; i < slots; i++) {
@@ -149,17 +150,13 @@ function calc() {
 		const min = val[0];			//4th D: min / max
 		const max = val[1];
 		const qual = (inputs[i] - min) / (max - min);
-		if(inputs[i] != 0)
-		{
+		if (inputs[i] != 0) {
 			results.push(qual);
 		}
 	}
-
-
 	out1.innerText = stringify(results);
 	var tqual = 0;
-	for(var i = 0; i < results.length; i++)
-	{tqual += results[i];}
+	for (var i = 0; i < results.length; i++) { tqual += results[i]; }
 	tqual /= results.length;
 	out2.innerText = tqual;
 }
