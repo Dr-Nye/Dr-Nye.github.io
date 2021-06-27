@@ -5,7 +5,6 @@
 
 <head>
     <title>How much does RNG hate me today?</title>
-
 </head>
 
 
@@ -14,7 +13,7 @@
 
 
     <p>
-
+       <b>IF YOU RELOAD RELOAD USING CTRL + F5, NOT JUST F5, THINGS WILL BREAK IF YOU DONT</b><br>
         <label for="types">Choose heirloom type</label>
         <select name="types" onchange="selectType()" id="types">
             <option value="0">Select plox</option>
@@ -37,6 +36,7 @@
     <p>
         Enter the values as a decimal number instead of a % (idk how to get JS to parse percents) - e.g. 1.234 instead of 123.4% <br>
         afterwards press the button on the left side; empty fields will be treated as if the modifier was "empty" <br>
+        If everything is empty it will div0, at least 1 value is needed
     <form id="input">
         <input type="button" onclick="calc() ">
     </form>
