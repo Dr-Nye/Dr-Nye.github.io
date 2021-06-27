@@ -10,12 +10,12 @@
 
 
 
-<body style="background-color: black; color: white;">
+<body style="background-color: black; color: white;" id="body">
 
     <p>
 
-        <label for="types">Choose heirloom typerino</label>
-        <select name="types" onchange="getRarities()" id="types">
+        <label for="types">Choose heirloom type</label>
+        <select name="types" onchange="selectType()" id="types">
             <option value="0">Select plox</option>
             <option value="1">Shield</option>
             <option value="2">Core</option>
@@ -25,15 +25,29 @@
     </p>
 
     <p>
-        <label for="test" id="test2">abcde</label>
-        <select name="rarity" onchange="getAffixes()" id="rarity">
-            
+        <label for="rarity">Choose heirloom rarity</label>
+        <select name="rarity" onchange="selectRarity()" id="rarity">
+
         </select>
      </p>
 
-     <p id="lel">
-         a
+     <p id="modifierSelectors">
+
      </p>
+
+     <p>
+        check this box you entered the everything else
+        <form id="input">
+            <input type="checkbox" onclick="calc() ">
+        </form>
+     </p>
+
+     <p id="test">
+
+
+     </p>
+
+
 
 </body>
 
