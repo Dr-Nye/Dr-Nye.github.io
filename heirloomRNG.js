@@ -5,7 +5,7 @@
 const Slots = [1, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6];
 const modifiers = [
 	["Player Efficiency", "Trainer Efficiency", "Storage Size", "Breed Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VMDC", "Plaguebringer", "Prismatic Shield", "Gamma Burst"],
-	["Runestone Drop Rate", "Fire Trap Damage", "Strength Tower Effect", "Poison Trap Damage", "Condenser Effect", "Lightning Trap Damage"],
+	["Runestone Drop Rate", "Fire Trap Damage", "Strength Tower Effect", "Condenser Effect", "Poison Trap Damage", "Lightning Trap Damage"],
 	["Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Farmer Efficiency", "Lumberjack Efficiency", "Miner Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Pet XP"]]
 //list of all possible mods by type
 const Rarities = ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued", "Radiating", "Hazardous"];
@@ -24,10 +24,6 @@ const HeirloomValues =
 
 	]
 
-//selection default element
-const selectPlox = document.createElement('option');
-selectPlox.value = -1;
-selectPlox.label = "select Plox";
 
 //declaring some stuff so it can be used after being initialized in other functions
 var slots = 0;
@@ -46,7 +42,7 @@ function selectType() {
 	// -ethereal for core, hazardous else
 	const rars = 10 - 4 * (type == 2);
 
-	//empties list and generates default element
+	//makes rarity dropdown
 	out.innerHTML = null
 	optionate(out,[],Rarities);
 
@@ -79,9 +75,11 @@ function selectRarity() {
 		select.name = "modSelector" + i;
 		select.setAttribute("onchange", "selectMods(" + i + ")")
 		select.id = "modSelector" + i;
+
 		optionate(select, bl, modifiers[type - 1].slice(0, ModifierUnlocks[type - 1][rarity]));
 		modDivision.appendChild(select);
 	}
+
 	//creates #Slots ammount of entry fields
 	for (var i = 0; i < slots; i++) {
 		const input = document.createElement('input');
@@ -96,7 +94,10 @@ function selectRarity() {
 
 //lib adds options to selector
 function optionate(node, bl, source) {
-	node.appendChild(selectPlox);
+	const def = document.createElement('option');
+	def.label = "select Plox";
+	def.value = -1;
+	node.appendChild(def);
 	for (var j = 0; j < source.length; j++) {
 		const option = document.createElement('option');
 		if (!bl.includes(j + "")) {
@@ -106,6 +107,8 @@ function optionate(node, bl, source) {
 		}
 	}
 }
+
+
 
 //called from mod selector
 function selectMods(count) {
