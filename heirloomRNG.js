@@ -116,11 +116,9 @@ function optionate(node, bl, source) {
 //called from mod selector
 function selectMods(count) {
 	const selection = document.getElementById("modSelector" + count).value;
-	var test = document.getElementById("test");
 
 	//blacklists current value
 	bl[count] = selection;
-	test.innerHTML = stringify(bl);
 
 	//filters each following selector
 	for (i = count + 1; i < slots; i++) {
@@ -132,14 +130,16 @@ function selectMods(count) {
 
 function writeInput(count) {
 	inputs[count] = document.getElementById("entry" + count).value;
-	document.getElementById("test").innerText = inputs[count];
+
 }
 
 function calc() {
 
 
-	test = document.getElementById("test");
-	test.innerText = type - 1 + " " + bl[i] + " " + rarity;
+	out1 = document.getElementById("out1");
+	out2 = document.getElementById("out2");
+	
+
 	var results = [];
 	for (var i = 0; i < slots; i++) {
 
@@ -149,12 +149,19 @@ function calc() {
 		const min = val[0];			//4th D: min / max
 		const max = val[1];
 		const qual = (inputs[i] - min) / (max - min);
-		results.push(qual);
+		if(inputs[i] != 0)
+		{
+			results.push(qual);
+		}
 	}
 
 
-	test.innerText = stringify(results);
-
+	out1.innerText = stringify(results);
+	var tqual = 0;
+	for(var i = 0; i < results.length; i++)
+	{tqual += results[i];}
+	tqual /= results.length;
+	out2.innerText = tqual;
 }
 
 
