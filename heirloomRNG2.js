@@ -28,153 +28,33 @@ const HeirloomValues =
 //declaring some stuff so it can be used after being initialized in other functions
 var slots = 0;
 var type = 0;
-var bl;
+var bl;	
 var rarity = 0;
 var inputs = [0, 0, 0, 0, 0, 0];
-
-
-//handles updates on selecting type
-function selectType() {
-
-	type = document.getElementById("types").value;
-	const out = document.getElementById("rarity");
-
-	// -ethereal for core, hazardous else
-	const rars = 10 - 4 * (type == 2);
-
-	//makes rarity dropdown
-	out.innerHTML = null
-	optionate(out,[],Rarities);
-
-}
-
-//handles updates on selecting rarity
-function selectRarity() {
-	const modDivision = document.getElementById("modifierSelectors");
-	const inputDivision = document.getElementById("input");
-
-
-	//kills old selectors
-	for (var i = 0; i < slots; i++) {
-		modDivision.removeChild(document.getElementById("modSelector" + i));
-		inputDivision.removeChild(document.getElementById("entry" + i));
-	}
-
-	//gets new selector count
-	rarity = document.getElementById("rarity").value;
-
-	if (rarity > 8 && type == 1) { bl = [-1, -1, -1, -1, -1, -1, "1", "2", "6"]; }
-	else { bl = [-1, -1, -1, -1, -1, -1]; }
-
-
-	slots = Slots[rarity];
-
-	//creates #Slots ammount of mod selectors
-	for (var i = 0; i < slots; i++) {
-		const select = document.createElement('select');
-		select.label = "modSelector" + i;
-		select.name = "modSelector" + i;
-		select.setAttribute("onchange", "selectMods(" + i + ")")
-		select.id = "modSelector" + i;
-
-		optionate(select, bl, modifiers[type - 1].slice(0, ModifierUnlocks[type - 1][rarity]));
-		modDivision.appendChild(select);
-	}
-
-	//creates #Slots ammount of entry fields
-	for (var i = 0; i < slots; i++) {
-		const input = document.createElement('input');
-		input.type = "text";
-		input.id = "entry" + i;
-		input.setAttribute("oninput", "writeInput(" + i + ")");
-		inputDivision.appendChild(input);
-	}
-
-
-}
-
-//adds options (names in source) to node with elements with index in BL being skipped
-function optionate(node, bl, source) {
-	const def = document.createElement('option');
-	def.label = "select Plox";
-	def.value = -1;
-	node.appendChild(def);
-	for (var j = 0; j < source.length; j++) {
-		const option = document.createElement('option');
-		if (!bl.includes(j + "")) {
-			option.value = j;
-			option.label = source[j];
-			node.appendChild(option);
-		}
-	}
-}
+var Heirlooms;
 
 
 
-//updates remainder of options on selecting a modifier
-function selectMods(count) {
-	const selection = document.getElementById("modSelector" + count).value;
-
-	//blacklists current value
-	bl[count] = selection;
-
-	//filters each following selector
-	for (i = count + 1; i < slots; i++) {
-		selector = document.getElementById("modSelector" + i);
-		selector.innerHTML = null;
-		optionate(selector, bl, modifiers[type - 1]);
-	}
-}
-
-
-//saves values from text fields into storage
-function writeInput(count) {
-	inputs[count] = document.getElementById("entry" + count).value;
-}
-
-
-
-function calc() {
-
-	out1 = document.getElementById("out1");
-	out2 = document.getElementById("out2");
-
-
-	var results = [];
-	for (var i = 0; i < slots; i++) {
-
-		var val = HeirloomValues[type - 1] 	//first D: Heirloom Type
-		[bl[i]]		//second D: Modifier
-		[rarity]; 	//third D: Rarity
-		const min = val[0];			//4th D: min / max
-		const max = val[1];
-		const qual = (inputs[i] - min) / (max - min);
-		if (inputs[i] != 0) {
-			results.push(qual);
-		}
-	}
-	out1.innerText = stringify(results);
-	var tqual = 0;
-	for (var i = 0; i < results.length; i++) { tqual += results[i]; }
-	tqual /= results.length;
-	out2.innerText = tqual;
-
-}
-
-function pasteSave()
-{
+function getHeirloomOptions() {
+	// Try to parse the save string
+	var out1 = document.getElementById('out1');
+	var saveString = document.getElementById('saveString');
+	if(saveString == null){out1.innerText = "huh"; return;}
+	out1.innerText = saveString.value;
 	var game;
 	try {
-	  game = JSON.parse(LZString.decompressFromBase64(document.getElementById("saveString").value));
-	} catch(err) {}
-	var Heirlooms = [game.global.ShieldEquipped,game.global.CoreEquipped,game.global.StaffEquipped];
-	for(i = 0; i < game.HeirloomsCarried.length; i++)
-	{
+		game = JSON.parse(LZString.decompressFromBase64(saveString.value));
+	} catch (err) { }
+
+
+	//equipped looms
+	Heirlooms = [game.global.ShieldEquipped, game.global.CoreEquipped, game.global.StaffEquipped];
+	//looms in carry slots
+	for (i = 0; i < game.HeirloomsCarried.length; i++) {
 		Heirlooms.push(game.HeirloomsCarried[i]);
 	}
-	
-	for(i = 0; i < game.HeirloomsExtra.length; i++)
-	{
+	//looms that will DIE
+	for (i = 0; i < game.HeirloomsExtra.length; i++) {
 		Heirlooms.push(game.HeirloomsExtra[i]);
 	}
 }

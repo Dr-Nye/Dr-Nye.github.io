@@ -2,6 +2,8 @@
 <html>
 
 <script language="javascript" src="./heirloomRNG.js"></script>
+<script language="javascript" src="./import.js"></script>
+<script language="javascript" src="./lz-string.js"></script>
 
 <head>
     <title>How much does RNG hate me today?</title>
@@ -11,9 +13,9 @@
 
 <body style="background-color: #36393f; color: white;" id="body">
 
-
+    <h1>Manual Entry</h1>
     <p>
-       <b>IF YOU RELOAD RELOAD USING CTRL + F5, NOT JUST F5, THINGS WILL BREAK IF YOU DONT</b><br>
+        <b>IF YOU RELOAD USING CTRL + F5, NOT JUST F5, THINGS WILL BREAK IF YOU DONT</b><br>
         <label for="types">Choose heirloom type</label>
         <select name="types" onchange="selectType()" id="types">
             <option value="0">Select plox</option>
@@ -34,7 +36,8 @@
     </p>
 
     <p>
-        Enter the values as a decimal number instead of a % (idk how to get JS to parse percents) - e.g. 1.234 instead of 123.4% <br>
+        Enter the values as a decimal number instead of a % (idk how to get JS to parse percents) - e.g. 1.234 instead
+        of 123.4% <br>
         afterwards press the button on the left side; empty fields will be treated as if the modifier was "empty" <br>
         If everything is empty it will div0, at least 1 value is needed
     <form id="input">
@@ -42,10 +45,12 @@
     </form>
     </p>
 
+    <h1>Results </h1>
+
     <p>Single Rolls Rated from 0-1</p>
     <p id="out1">
     </p>
-    
+
     <p>Total Heirloom Rated from 0-1</p>
     <p id="out2">
     </p>
