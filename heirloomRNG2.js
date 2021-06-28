@@ -33,6 +33,12 @@ var rarity = 0;
 var inputs = [0, 0, 0, 0, 0, 0];
 var Heirlooms;
 
+function processingNeeded() {
+	gNeedProcessing = true;
+	setTimeout(function () {
+	  getHeirloomOptions();
+	}, 1);
+  }
 
 
 function getHeirloomOptions() {
@@ -40,21 +46,21 @@ function getHeirloomOptions() {
 	var out1 = document.getElementById('out1');
 	var saveString = document.getElementById('saveString');
 	if(saveString == null){out1.innerText = "huh"; return;}
-	out1.innerText = saveString.value;
 	var game;
 	try {
-		game = JSON.parse(LZString.decompressFromBase64(saveString.value));
+		gameString = LZString.decompressFromBase64(saveString.value);
+		out1.innerText = game;
 	} catch (err) { }
 
 
 	//equipped looms
 	Heirlooms = [game.global.ShieldEquipped, game.global.CoreEquipped, game.global.StaffEquipped];
 	//looms in carry slots
-	for (i = 0; i < game.HeirloomsCarried.length; i++) {
+	for (i = 0; i < game.global.HeirloomsCarried.length; i++) {
 		Heirlooms.push(game.global.HeirloomsCarried[i]);
 	}
 	//looms that will DIE
-	for (i = 0; i < game.HeirloomsExtra.length; i++) {
+	for (i = 0; i < game.global.HeirloomsExtra.length; i++) {
 		Heirlooms.push(game.global.HeirloomsExtra[i]);
 	}
 }
