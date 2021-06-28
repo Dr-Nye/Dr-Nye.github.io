@@ -48,21 +48,23 @@ function getHeirloomOptions() {
 	if(saveString == null){out1.innerText = "huh"; return;}
 	var game;
 	try {
-		gameString = LZString.decompressFromBase64(saveString.value);
-		out1.innerText = game;
+		var gameString = LZString.decompressFromBase64(saveString.value);
+		game = JSON.parse(gameString);
 	} catch (err) { }
 
 
 	//equipped looms
 	Heirlooms = [game.global.ShieldEquipped, game.global.CoreEquipped, game.global.StaffEquipped];
 	//looms in carry slots
-	for (i = 0; i < game.global.HeirloomsCarried.length; i++) {
-		Heirlooms.push(game.global.HeirloomsCarried[i]);
+	for (i = 0; i < game.global.heirloomsCarried.length; i++) {
+		Heirlooms.push(game.global.heirloomsCarried[i]);
 	}
 	//looms that will DIE
-	for (i = 0; i < game.global.HeirloomsExtra.length; i++) {
-		Heirlooms.push(game.global.HeirloomsExtra[i]);
+	for (i = 0; i < game.global.heirloomsExtra.length; i++) {
+		Heirlooms.push(game.global.heirloomsExtra[i]);
 	}
+
+	out1.innerText = stringify(Heirlooms);
 }
 
 
@@ -84,7 +86,7 @@ function getHeirloomOptions() {
 function stringify(array) {
 	out = "[";
 	for (var i = 0; i < array.length; i++) {
-		out += " " + array[i];
+		out += " " + array[i].name;
 	}
 	return out + "]";
 }
