@@ -51,11 +51,11 @@ function getHeirloomOptions() {
 	Heirlooms = [game.global.ShieldEquipped, game.global.CoreEquipped, game.global.StaffEquipped];
 	//looms in carry slots
 	for (i = 0; i < game.HeirloomsCarried.length; i++) {
-		Heirlooms.push(game.HeirloomsCarried[i]);
+		Heirlooms.push(game.global.HeirloomsCarried[i]);
 	}
 	//looms that will DIE
 	for (i = 0; i < game.HeirloomsExtra.length; i++) {
-		Heirlooms.push(game.HeirloomsExtra[i]);
+		Heirlooms.push(game.global.HeirloomsExtra[i]);
 	}
 }
 
