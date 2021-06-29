@@ -124,7 +124,7 @@ function calc(heirloomNumber) {
 	var linebreak3 = document.createElement('br');
 	resultDivision.appendChild(resU);
 	resultDivision.appendChild(linebreak3);
-
+}
 
 
 function uglyfy(floaty) {
