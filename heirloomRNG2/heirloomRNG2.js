@@ -94,7 +94,7 @@ function calc(heirloomNumber){
 	var fromMax = [];
 	var eval = [];
 	for(var i = 0; i < slots; i++){
-		modTypes.push(modIndexer(Heirloom.mods[i][0]));
+		modTypes.push(modIndexer(type,Heirloom.mods[i][0]));
 		fromMax.push(Heirloom.mods[i][3]);
 		var size = HeirloomValues[type][rarity][modTypes[i]];
 		var size = 500;
