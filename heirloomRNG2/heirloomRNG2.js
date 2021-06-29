@@ -101,7 +101,7 @@ function calc(heirloomNumber) {
 		resultDivision.appendChild(linebreak);
 
 		totalRating += rating;
-		totalChange *= 1-rating;
+		totalChange *= (1+fromMax)/stepCount;
 
 	}
 	var resR = document.createElement('p');
@@ -111,7 +111,7 @@ function calc(heirloomNumber) {
 	resultDivision.appendChild(linebreak1);
 
 	var resC = document.createElement('p');
-	resC.innerText = "Chance to an heirloom better in all stats: " + uglyfy(totalChange);
+	resC.innerText = "Chance to find an heirloom with better or equal stats: " + uglyfy(totalChange);
 	var linebreak2 = document.createElement('br');
 	resultDivision.appendChild(resC);
 	resultDivision.appendChild(linebreak2);
