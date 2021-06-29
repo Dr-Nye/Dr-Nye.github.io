@@ -74,9 +74,11 @@ function calc(heirloomNumber) {
 	resultDivision.innerHTML = null;
 	var totalRating = 0;
 	var totalChange = 1;
+	var upgradeCount = 0;
 
 	for (var i = 0; i < slots; i++) {
 		var fromMax = Heirloom.mods[i][2];
+		upgradeCount += fromMax;
 		var mod = Heirloom.mods[i][0];
 
 
@@ -116,11 +118,18 @@ function calc(heirloomNumber) {
 	var linebreak2 = document.createElement('br');
 	resultDivision.appendChild(resC);
 	resultDivision.appendChild(linebreak2);
-}
+
+	var resU = document.createElement('p');
+	resC.innerText = "Ammount of Upgrades required to softcap: " + upgradeCount;
+	var linebreak3 = document.createElement('br');
+	resultDivision.appendChild(resU);
+	resultDivision.appendChild(linebreak3);
+
 
 
 function uglyfy(floaty) {
 	floaty = (Math.floor(floaty * 10000) / 100) + "%";
+
 	return floaty;
 }
 
