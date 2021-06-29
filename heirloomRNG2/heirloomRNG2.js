@@ -2,6 +2,7 @@
 //declaring some stuff so it can be used after being initialized in other functions
 var Heirlooms;
 var HeirloomValues;
+var heirloomButtons = [];
 
 function processingNeeded() {
 	gNeedProcessing = true;
@@ -39,8 +40,7 @@ function getHeirloomOptions() {
 
 	for (i = 0; i < Heirlooms.length; i++) {
 		var button = document.createElement('button');
-
-
+		heirloomButtons.push(button);
 		var icon = document.createElement('span');
 		var iconType = Heirlooms[i].icon;
 		var icomoon = Heirlooms[i].icon[0] == "*";
@@ -53,7 +53,8 @@ function getHeirloomOptions() {
 		icon.setAttribute('class', iconType);
 		icon.innerText = " " + Heirlooms[i].name;
 
-		button.setAttribute('onclick', "calc(" + i + ")");
+		button.addEventListener('click', calc.bind(null, i));
+		button.addEventListener('click', changeButtonColors);
 		button.appendChild(icon);
 		selectorDivision.appendChild(button);
 		selectorDivision.appendChild(document.createElement('br'));
@@ -125,23 +126,12 @@ function calc(heirloomNumber) {
 	resultDivision.appendChild(linebreak3);
 
 
-}
-
-
-
 
 function uglyfy(floaty) {
 	floaty = (Math.floor(floaty * 10000) / 100) + "%";
-	console.log(floaty);
+
 	return floaty;
 }
-
-
-
-
-
-
-
 
 
 //random stuff
@@ -164,6 +154,4 @@ function changeButtonColors(event) {
 	});
 	selected.style.backgroundColor = "rgb(255, 255, 200)";
 }
-
-
 
