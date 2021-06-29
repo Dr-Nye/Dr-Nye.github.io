@@ -155,3 +155,15 @@ function stringify(array) {
 	return out + "]";
 }
 
+
+function changeButtonColors(event) {
+	// Reset all buttons and change color of the selected one.
+	var selected = event.target.nodeName !== "SPAN" ? event.target : event.target.parentElement;
+	heirloomButtons.forEach(button => {
+		button.style.backgroundColor = null;
+	});
+	selected.style.backgroundColor = "rgb(255, 255, 200)";
+}
+
+
+
