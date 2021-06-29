@@ -101,7 +101,7 @@ function calc(heirloomNumber) {
 		resultDivision.appendChild(linebreak);
 
 		totalRating += rating;
-		totalChange *= rating;
+		totalChange *= 1-rating;
 
 	}
 	var resR = document.createElement('p');
