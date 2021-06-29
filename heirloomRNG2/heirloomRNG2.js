@@ -92,7 +92,7 @@ function calc(heirloomNumber) {
 
 		var stepSize = bigSteppy[2];
 		var stepCount = (max - min) / stepSize + 1;
-		var rating = fromMax / stepCount;
+		var rating = (stepcount-fromMax) / stepCount;
 
 		var resI = document.createElement('p');
 		resI.innerText = "Drop quality of mod " + mod + ": " + uglyfy(rating);
