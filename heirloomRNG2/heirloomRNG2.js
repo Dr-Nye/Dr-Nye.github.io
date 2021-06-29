@@ -3,7 +3,7 @@
 
 //heirloom constants; should make another file for more of those soon
 const Slots = [1, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6];
-const modifiers = [
+const Modifiers = [
 	["Player Efficiency", "Trainer Efficiency", "Storage Size", "Breed Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VMDC", "Plaguebringer", "Prismatic Shield", "Gamma Burst"],
 	["Runestone Drop Rate", "Fire Trap Damage", "Strength Tower Effect", "Condenser Effect", "Poison Trap Damage", "Lightning Trap Damage"],
 	["Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Farmer Efficiency", "Lumberjack Efficiency", "Miner Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Pet XP"]]
@@ -26,31 +26,28 @@ const HeirloomValues =
 
 
 //declaring some stuff so it can be used after being initialized in other functions
-var slots = 0;
-var type = 0;
-var bl;	
-var rarity = 0;
-var inputs = [0, 0, 0, 0, 0, 0];
 var Heirlooms;
 
 function processingNeeded() {
 	gNeedProcessing = true;
 	setTimeout(function () {
-	  getHeirloomOptions();
+		getHeirloomOptions();
 	}, 1);
-  }
+}
 
 
 function getHeirloomOptions() {
 	// Try to parse the save string
 	var out1 = document.getElementById('out1');
 	var saveString = document.getElementById('saveString');
-	if(saveString == null){out1.innerText = "huh"; return;}
+	if (saveString == null) { out1.innerText = "huh"; return; }
 	var game;
 	try {
 		var gameString = LZString.decompressFromBase64(saveString.value);
 		game = JSON.parse(gameString);
 	} catch (err) { }
+	var selectorDivision = document.getElementById("selector");
+	if (game != null) { selectorDivision.innerHTML = null; }
 
 
 	//equipped looms
@@ -64,10 +61,66 @@ function getHeirloomOptions() {
 		Heirlooms.push(game.global.heirloomsExtra[i]);
 	}
 
-	out1.innerText = stringify(Heirlooms);
+	for (i = 0; i < Heirlooms.length; i++) {
+		var button = document.createElement('button');
+
+
+		var icon = document.createElement('span');
+		var iconType = Heirlooms[i].icon;
+		var icomoon = Heirlooms[i].icon[0] == "*";
+		var prefix = "glyphicon glyphicon-";
+		if (icomoon) {
+			prefix = "icomoon icon-";
+			iconType = iconType.substring(1);
+		}
+		iconType = prefix + iconType;
+		icon.setAttribute('class', iconType);
+		icon.innerText = " " + Heirlooms[i].name;
+
+		button.setAttribute('onclick', "calc(" + i + ")");
+		button.appendChild(icon);
+		selectorDivision.appendChild(button);
+		selectorDivision.appendChild(document.createElement('br'));
+
+	}
 }
 
+function calc(heirloomNumber){
 
+	var Heirloom = Heirlooms[heirloomNumber];
+	var type = typeIndexer(Heirloom.type);
+	var slots = Slots[Heirloom.rarity];
+	var modTypes = [];
+	var fromMax = [];
+	var eval = [];
+	for(var i = 0; i < slots; i++){
+		modTypes.push(modIndexer(Heirloom.mods[i][0]));
+		fromMax.push(Heirloom.mods[i][3]);
+		var size = HeirloomValues[type][rarity][modTypes[i]];
+		var size = 500;
+		eval.push((size-fromMax[i])/size);
+	}
+
+
+
+
+}
+
+function typeIndexer(type){
+	switch(typeIndexer){
+		case "Shield": return 0;
+		case "Staff": return 2;
+		default: return 1;
+	}
+}
+
+function modIndexer(mod,type){
+	var typeMods = Modifiers[type];
+	for(var i = 0; i < typeMods.length; i++)
+	{
+		if(typeMods[i] == mod) return i;
+	}
+}
 
 
 
