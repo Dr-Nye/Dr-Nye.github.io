@@ -73,9 +73,11 @@ function calc(heirloomNumber) {
 	resultDivision.innerHTML = null;
 	var totalRating = 0;
 	var totalChange = 1;
+	var upgradeCount = 0;
 
 	for (var i = 0; i < slots; i++) {
 		var fromMax = Heirloom.mods[i][2];
+		upgradeCount += fromMax;
 		var mod = Heirloom.mods[i][0];
 
 
@@ -92,7 +94,7 @@ function calc(heirloomNumber) {
 
 		var stepSize = bigSteppy[2];
 		var stepCount = (max - min) / stepSize + 1;
-		var rating = (stepCount-fromMax) / stepCount;
+		var rating = (stepCount - fromMax) / stepCount;
 
 		var resI = document.createElement('p');
 		resI.innerText = "Drop quality of mod " + mod + ": " + uglyfy(rating);
@@ -101,7 +103,7 @@ function calc(heirloomNumber) {
 		resultDivision.appendChild(linebreak);
 
 		totalRating += rating;
-		totalChange *= (1+fromMax)/stepCount;
+		totalChange *= (1 + fromMax) / stepCount;
 
 	}
 	var resR = document.createElement('p');
@@ -116,6 +118,12 @@ function calc(heirloomNumber) {
 	resultDivision.appendChild(resC);
 	resultDivision.appendChild(linebreak2);
 
+	var resU = document.createElement('p');
+	resC.innerText = "Ammount of Upgrades required to softcap: " + upgradeCount;
+	var linebreak3 = document.createElement('br');
+	resultDivision.appendChild(resU);
+	resultDivision.appendChild(linebreak3);
+
 
 }
 
@@ -123,7 +131,7 @@ function calc(heirloomNumber) {
 
 
 function uglyfy(floaty) {
-	floaty = (Math.floor(floaty*10000) / 100) + "%";
+	floaty = (Math.floor(floaty * 10000) / 100) + "%";
 	console.log(floaty);
 	return floaty;
 }
