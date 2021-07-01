@@ -80,35 +80,33 @@ function calc(heirloomNumber) {
 		var fromMax = Heirloom.mods[i][2];
 		upgradeCount += fromMax;
 		var mod = Heirloom.mods[i][0];
-		console.log(mod);
 
-		if(mod != "empty"){
-		var bigSteppy = HeirloomStats[type][mod]["steps"];
+		if (mod != "empty") {
+			var bigSteppy = HeirloomStats[type][mod]["steps"];
 
-		if (bigSteppy === undefined) {
-			bigSteppy = HeirloomStats.defaultSteps;
+			if (bigSteppy === undefined) {
+				bigSteppy = HeirloomStats.defaultSteps;
+			}
+
+			bigSteppy = bigSteppy[rarity];
+
+			var max = bigSteppy[1];
+			var min = bigSteppy[0];
+
+			var stepSize = bigSteppy[2];
+			var stepCount = (max - min) / stepSize + 1;
+			var rating = (stepCount - fromMax) / stepCount;
+
+			var resI = document.createElement('p');
+			resI.innerText = "Drop quality of mod " + mod + ": " + uglyfy(rating);
+			var linebreak = document.createElement('br');
+			resultDivision.appendChild(resI);
+			resultDivision.appendChild(linebreak);
+
+			totalRating += rating;
+			totalChange *= (1 + fromMax) / stepCount;
 		}
-
-		bigSteppy = bigSteppy[rarity];
-
-		var max = bigSteppy[1];
-		var min = bigSteppy[0];
-
-		var stepSize = bigSteppy[2];
-		var stepCount = (max - min) / stepSize + 1;
-		var rating = (stepCount - fromMax) / stepCount;
-
-		var resI = document.createElement('p');
-		resI.innerText = "Drop quality of mod " + mod + ": " + uglyfy(rating);
-		var linebreak = document.createElement('br');
-		resultDivision.appendChild(resI);
-		resultDivision.appendChild(linebreak);
-
-		totalRating += rating;
-		totalChange *= (1 + fromMax) / stepCount;
-		}
-		else
-		{
+		else {
 			slots--;
 		}
 
@@ -121,12 +119,15 @@ function calc(heirloomNumber) {
 
 	var resC = document.createElement('p');
 	resC.innerText = "Chance to find an heirloom with better or equal stats: " + uglyfy(totalChange);
+
+	console.log(resC);
+
 	var linebreak2 = document.createElement('br');
 	resultDivision.appendChild(resC);
 	resultDivision.appendChild(linebreak2);
 
 	var resU = document.createElement('p');
-	resC.innerText = "Ammount of Upgrades required to softcap: " + upgradeCount;
+	resU.innerText = "Ammount of Upgrades required to softcap: " + upgradeCount;
 	var linebreak3 = document.createElement('br');
 	resultDivision.appendChild(resU);
 	resultDivision.appendChild(linebreak3);
