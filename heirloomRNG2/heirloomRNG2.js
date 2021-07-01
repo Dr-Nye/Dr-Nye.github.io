@@ -80,8 +80,9 @@ function calc(heirloomNumber) {
 		var fromMax = Heirloom.mods[i][2];
 		upgradeCount += fromMax;
 		var mod = Heirloom.mods[i][0];
+		console.log(mod);
 
-
+		if(mod != "empty"){
 		var bigSteppy = HeirloomStats[type][mod]["steps"];
 
 		if (bigSteppy === undefined) {
@@ -105,6 +106,11 @@ function calc(heirloomNumber) {
 
 		totalRating += rating;
 		totalChange *= (1 + fromMax) / stepCount;
+		}
+		else
+		{
+			slots--;
+		}
 
 	}
 	var resR = document.createElement('p');
