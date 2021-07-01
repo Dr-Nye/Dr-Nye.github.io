@@ -75,12 +75,13 @@ function calc(heirloomNumber) {
 	var totalRating = 0;
 	var totalChange = 1;
 	var upgradeCount = 0;
+	var slotDec = 0;
 
 	for (var i = 0; i < slots; i++) {
 		var fromMax = Heirloom.mods[i][2];
 		upgradeCount += fromMax;
 		var mod = Heirloom.mods[i][0];
-
+		console.log(mod);
 		if (mod != "empty") {
 			var bigSteppy = HeirloomStats[type][mod]["steps"];
 
@@ -107,10 +108,13 @@ function calc(heirloomNumber) {
 			totalChange *= (1 + fromMax) / stepCount;
 		}
 		else {
-			slots--;
+			slotDec++;
 		}
 
+
 	}
+	slots = slots - slotDec;
+
 	var resR = document.createElement('p');
 	resR.innerText = "Quality of all mods: " + uglyfy(totalRating / slots);
 	var linebreak1 = document.createElement('br');
@@ -119,9 +123,6 @@ function calc(heirloomNumber) {
 
 	var resC = document.createElement('p');
 	resC.innerText = "Chance to find an heirloom with better or equal stats: " + uglyfy(totalChange);
-
-	console.log(resC);
-
 	var linebreak2 = document.createElement('br');
 	resultDivision.appendChild(resC);
 	resultDivision.appendChild(linebreak2);
